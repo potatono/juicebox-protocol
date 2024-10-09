@@ -5,6 +5,7 @@ import datetime
 
 class Message:
     def __init__(self) -> None:
+        self.version = None
         self.payload_str = None
         self.checksum_str = None
 
@@ -48,7 +49,11 @@ class Message:
 
         # Instant amperage may need to be represented using 4 digits (e.g. 0040)
         # on newer Juicebox versions.
-        self.payload_str = f"CMD{weekday}{self.time.strftime('%H%M')}A{self.offline_amperage:02d}M{self.instant_amperage:02d}C{self.command:03d}S{self.counter:03d}"
+        if self.version == "09u":
+            f"CMD{weekday}{self.time.strftime('%H%M')}A{self.offline_amperage:04d}M{self.instant_amperage:03d}C{self.command:03d}S{self.counter:03d}"
+        else:
+            self.payload_str = f"CMD{weekday}{self.time.strftime('%H%M')}A{self.offline_amperage:02d}M{self.instant_amperage:02d}C{self.command:03d}S{self.counter:03d}"
+
         self.checksum_str = self.checksum_computed()
 
 
