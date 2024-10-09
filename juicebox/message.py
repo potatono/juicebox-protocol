@@ -50,7 +50,7 @@ class Message:
         # Instant amperage may need to be represented using 4 digits (e.g. 0040)
         # on newer Juicebox versions.
         if self.version == "09u":
-            f"CMD{weekday}{self.time.strftime('%H%M')}A{self.offline_amperage:04d}M{self.instant_amperage:03d}C{self.command:03d}S{self.counter:03d}"
+            self.payload_str = f"CMD{weekday}{self.time.strftime('%H%M')}A{self.offline_amperage:04d}M{self.instant_amperage:03d}C{self.command:03d}S{self.counter:03d}"
         else:
             self.payload_str = f"CMD{weekday}{self.time.strftime('%H%M')}A{self.offline_amperage:02d}M{self.instant_amperage:02d}C{self.command:03d}S{self.counter:03d}"
 
